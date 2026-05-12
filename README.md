@@ -6,11 +6,11 @@
 
 ## 📸 Ekran Görüntüleri
 
-> *(Görseller eklenecek)*
+
 
 | Giriş Ekranı | Müşteri Paneli | İşletme Sahibi Paneli |
 |:---:|:---:|:---:|
-| ![Auth](screenshots/auth.png) | ![Customer](screenshots/customer_dashboard.png) | ![Owner](screenshots/owner_dashboard.png) |
+| ![Auth](auth.png) | ![Customer](customer.png) | ![Owner](owner.png) |
 
 ---
 
