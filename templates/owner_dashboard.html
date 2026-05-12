@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>İşletme Sahibi Paneli</h1>
+
+<div class="grid">
+    <div class="card">
+        <h2>Yeni İşletme Ekle</h2>
+        <form action="{{ url_for('create_business') }}" method="POST">
+            <input type="text" name="name" placeholder="İşletme Adı" required>
+            <textarea name="description" placeholder="Açıklama" rows="3"></textarea>
+            <input type="text" name="hours" placeholder="Çalışma Saatleri (örn. 09:00-18:00)" required>
+            <button type="submit" class="btn btn-primary">Oluştur</button>
+        </form>
+    </div>
+
+    <div class="list-section" style="grid-column: span 2;">
+        <h2>İşletmelerim</h2>
+        {% if user.businesses %}
+        <div class="grid">
+            {% for business in user.businesses %}
+            <div class="card">
+                <h3>{{ business.name }}</h3>
+                <p>{{ business.description }}</p>
+                <p class="badge">{{ business.working_hours }}</p>
+
+                <h4>Randevular</h4>
+                {% if business.appointments %}
+                <ul style="list-style: none; padding: 0;">
+                    {% for appt in business.appointments %}
+                    <li
+                        style="background: rgba(255,255,255,0.05); padding: 0.5rem; margin-bottom: 0.5rem; border-radius: 4px;">
+                        <strong>{{ appt.date_time.strftime('%Y-%m-%d %H:%M') }}</strong> - {{ appt.customer.username }}
+                        <span class="badge" style="float: right">{{ appt.status }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p style="opacity: 0.6">Henüz randevu yok.</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>Henüz bir işletme oluşturmadınız.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

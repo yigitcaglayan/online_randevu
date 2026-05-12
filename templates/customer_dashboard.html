@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Müşteri Paneli</h1>
+
+<div class="grid">
+    <div style="grid-column: span 2;">
+        <h2>Randevularım</h2>
+        {% if user.appointments %}
+        <div class="grid">
+            {% for appt in user.appointments %}
+            <div class="card">
+                <h3>{{ appt.business.name }}</h3>
+                <p>{{ appt.date_time.strftime('%Y-%m-%d %H:%M') }}</p>
+                <span class="badge">{{ appt.status }}</span>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>Henüz bir randevunuz yok.</p>
+        {% endif %}
+    </div>
+
+    <div style="grid-column: span 3; margin-top: 2rem;">
+        <h2>İşletmeler</h2>
+        <div class="grid">
+            {% for business in businesses %}
+            <div class="card">
+                <h3>{{ business.name }}</h3>
+                <p>{{ business.description }}</p>
+                <p><strong>Saatler:</strong> {{ business.working_hours }}</p>
+
+                <form action="{{ url_for('book_appointment', business_id=business.id) }}" method="POST"
+                    style="margin-top: 1rem;">
+                    <label style="display: block; margin-bottom: 0.5rem;">Randevu Al:</label>
+                    <input type="datetime-local" name="date_time" required>
+                    <button type="submit" class="btn btn-primary">Devam Et</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
